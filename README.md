@@ -48,11 +48,11 @@ NA
 ## Example usage
 ```yaml
 - uses: actions/checkout@v2
-- uses: krantideep95/proto-api-docs-action@v0.2.0
+- uses: razorpay/proto-api-docs-action@v0.2.2
   with:
     GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
     PROTO_REPOSITORY: krantideep95/proto
-    PROTO_BRANCH: test
+    PROTO_BRANCH: ${{ github.ref }}
     MODULE_LIST_FILE_PATH: scripts/proto_modules
     AWS_S3_BUCKET: apidocs
     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
