@@ -1,6 +1,6 @@
-FROM mirror.gcr.io/library/golang:1.16-alpine
+FROM mirror.gcr.io/library/golang
 
-RUN apk add make git curl bash jq aws-cli
+RUN apt update; apt install -y make git curl bash jq awscli
 
 RUN go get github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2@v2.5.0 google.golang.org/protobuf/cmd/protoc-gen-go@v1.26.0
 
