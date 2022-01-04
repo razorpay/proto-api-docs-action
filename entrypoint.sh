@@ -5,10 +5,14 @@ echo "cloning protobuf files"
 bash /sparse-checkout.sh
 
 echo "generating swagger docs"
-cd / && buf beta mod update && buf generate
+mkdir /gen
+cd /proto
+for i in find . -name '*.proto'; do
+  protoc --plugin=/bin/protoc-gen-openapi -I. --openapi_out=/gen "$i";
+done
 
 echo "combining swagger docs into 1 file"
-bash /combine_swagger_docs.sh /docs
+bash node /combine.mjs /gen/*
 
 echo "create repo/branch dir structure"
 mkdir -p /_docs/${GITHUB_REPOSITORY#*/} && mv combined.json /_docs/${GITHUB_REPOSITORY#*/}/${GITHUB_REF##*/}.json
