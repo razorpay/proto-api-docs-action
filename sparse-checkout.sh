@@ -1,5 +1,6 @@
-#!/bin/bash
-set -euox pipefail
+#!/bin/sh
+set -e
+
 IFS=$'\n\t'
 
 # remove ref/head from $INPUT_PROTO_BRANCH
@@ -15,5 +16,4 @@ cp $GITHUB_WORKSPACE/${INPUT_MODULE_LIST_FILE_PATH} .git/info/sparse-checkout
 git remote add origin https://${INPUT_GIT_TOKEN}@github.com/${INPUT_PROTO_REPOSITORY}
 git -c protocol.version=2 fetch --no-tags --prune --depth=1 origin ${BRANCH_NAME}
 git checkout --force -B ${BRANCH_NAME} origin/${BRANCH_NAME}
-
-cd /
+rm -rf .git
