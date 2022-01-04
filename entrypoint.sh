@@ -8,7 +8,7 @@ echo "cloning protobuf files"
 echo "generating swagger docs"
 mkdir /gen
 cd /proto
-ls
+find . -name '*.proto'
 find . -name '*.proto' -exec protoc --plugin=/bin/protoc-gen-openapi -I. --openapi_out=/gen {} \;
 
 echo "combining swagger docs into 1 file"
