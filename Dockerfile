@@ -6,4 +6,6 @@ RUN GOBIN=/bin go install github.com/google/gnostic/apps/protoc-gen-openapi@late
 
 COPY . /
 
+RUN ls /
+
 ENTRYPOINT [ "/entrypoint.sh" ]
