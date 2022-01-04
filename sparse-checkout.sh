@@ -1,12 +1,10 @@
 #!/bin/sh
 set -e
 
-IFS=$'\n\t'
-
 # remove ref/head from $INPUT_PROTO_BRANCH
 BRANCH_NAME=$(echo ${INPUT_PROTO_BRANCH#refs/heads/})
 
-mkdir -p /proto
+mkdir /proto
 cd /proto
 git init
 git config --local gc.auto 0

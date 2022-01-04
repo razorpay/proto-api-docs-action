@@ -1,9 +1,9 @@
-FROM golang:alpine
+FROM alpine
 
-RUN apk add --no-cache nodejs aws-cli protobuf-dev git
+RUN apk add --no-cache go protobuf-dev aws-cli nodejs git
 
 RUN GOBIN=/bin go install github.com/google/gnostic/apps/protoc-gen-openapi@latest
 
-COPY . /
+COPY . /action
 
-ENTRYPOINT [ "/entrypoint.sh" ]
+ENTRYPOINT [ "/action/entrypoint.sh" ]

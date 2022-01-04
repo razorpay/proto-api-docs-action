@@ -1,4 +1,6 @@
 import fs from 'fs/promises';
+import yaml from './js-yaml.mjs';
+
 const files = process.argv.slice(2);
 
 function add(target, value, key) {
@@ -15,7 +17,14 @@ function add(target, value, key) {
   }
 }
 
-const allFiles = await Promise.all(files.map(file => fs.readFile(file).then(JSON.parse)));
+const allFiles = await Promise.all(files.map(file => fs.readFile(file).then(f => {
+  try {
+    return yaml.load(String(f));
+  } catch(e) {
+    console.error(e);
+  }
+})));
+
 const combined = {
   info: {
     title: '123',
@@ -26,6 +35,7 @@ const combined = {
 
 const skipKeys = ['info', 'tags'];
 allFiles.forEach((spec, i) => {
+  if (!spec) return;
   combined.tags.push({
     name: String(i),
     description: spec.info.title,

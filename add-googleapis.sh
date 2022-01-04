@@ -11,5 +11,5 @@ echo "google/" > .git/info/sparse-checkout
 git fetch --no-tags --prune --depth=1 origin master
 git checkout master
 rm -rf .git
-cd ../proto
-ln -s ../googleapis/google google
+cd /proto
+ln -s /googleapis/google google
