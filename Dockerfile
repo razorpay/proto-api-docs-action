@@ -2,6 +2,8 @@ FROM public.ecr.aws/bitnami/golang:1.21.1
 
 RUN apt update; apt install -y make git curl bash jq awscli
 
+RUN touch $(go env GOROOT)/go.env && echo 'GOPROXY=https://proxy.golang.org,direct' > $(go env GOROOT)/go.env
+
 RUN go env
 RUN cat $(go env GOROOT)/go.env
 
