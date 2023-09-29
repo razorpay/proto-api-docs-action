@@ -1,6 +1,6 @@
 FROM golang:1.21.1-alpine3.18
 
-RUN apt update; apt install -y make git curl bash jq awscli
+RUN apk update; apk add make git curl bash jq awscli
 
 #COPY ./go.env /custom_go.env
 #
