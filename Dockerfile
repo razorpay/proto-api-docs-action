@@ -1,6 +1,6 @@
 FROM golang:1.21.1-alpine3.18
 
-RUN apk update; apk add make git curl bash jq awscli
+RUN apk update; apk add make git curl bash jq aws-cli
 
 #COPY ./go.env /custom_go.env
 #
