@@ -1,12 +1,12 @@
-FROM public.ecr.aws/bitnami/golang
+FROM golang:1.21.1-alpine3.18
 
 RUN apt update; apt install -y make git curl bash jq awscli
 
-COPY ./go.env /custom_go.env
-
-RUN touch $(go env GOROOT)/go.env &&  \
-    cat /custom_go.env >> $(go env GOROOT)/go.env &&  \
-    rm /custom_go.env
+#COPY ./go.env /custom_go.env
+#
+#RUN touch $(go env GOROOT)/go.env &&  \
+#    cat /custom_go.env >> $(go env GOROOT)/go.env &&  \
+#    rm /custom_go.env
 
 RUN go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2@v2.10.0
 RUN go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.28.0
