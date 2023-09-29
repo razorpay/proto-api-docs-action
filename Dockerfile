@@ -2,6 +2,7 @@ FROM public.ecr.aws/bitnami/golang:1.21.1
 
 RUN apt update; apt install -y make git curl bash jq awscli
 
+RUN go env
 RUN cat $(go env GOROOT)/go.env
 
 RUN go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2@v2.10.0
