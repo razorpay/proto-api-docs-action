@@ -1,4 +1,4 @@
-FROM public.ecr.aws/bitnami/golang
+FROM public.ecr.aws/bitnami/golang:latest
 
 RUN apt update; apt install -y make git curl bash jq awscli
 
