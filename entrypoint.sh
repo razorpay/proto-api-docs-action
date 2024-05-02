@@ -3,11 +3,16 @@ set -euo pipefail
 
 cd /action
 
-echo "cloning protobuf files"
-bash sparse-checkout.sh
+mkdir proto
+cd proto
+git clone https://{INPUT_GIT_TOKEN}@github.com/${INPUT_PROTO_REPOSITORY}
 
 echo "generating swagger docs"
-buf mod update && buf generate
+buf mod update && buf generate proto
+
+cd ..
+
+mv proto/docs .
 
 echo "combining swagger docs into 1 file"
 bash combine_swagger_docs.sh docs
