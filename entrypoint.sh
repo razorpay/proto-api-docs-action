@@ -3,9 +3,8 @@ set -euo pipefail
 
 cd /action
 
-mkdir proto
-cd proto
-git clone https://{INPUT_GIT_TOKEN}@github.com/${INPUT_PROTO_REPOSITORY}
+echo "cloning protobuf files"
+bash sparse-checkout.sh
 
 echo "generating swagger docs"
 buf mod update && buf generate proto
