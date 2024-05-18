@@ -4,7 +4,7 @@ branding:
   icon: 'edit-3'
   color: 'gray-dark'
 inputs:
-  GIT_TOKEN:
+  TOKEN_GIT:
     description: 'git token to use for cloning the repository containing the protobuf files'
     required: true
   PROTO_REPOSITORY:
@@ -35,7 +35,7 @@ runs:
   using: "docker"
   image: 'Dockerfile'
   args:
-      - ${{ inputs.GIT_TOKEN }}
+      - ${{ inputs.TOKEN_GIT }}
         ${{ inputs.PROTO_REPOSITORY }}
         ${{ inputs.PROTO_BRANCH }}
         ${{ inputs.MODULE_LIST_FILE_PATH }}

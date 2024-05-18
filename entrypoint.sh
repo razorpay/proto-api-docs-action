@@ -1,6 +1,13 @@
 #!/bin/bash
 set -euo pipefail
 
+echo "setting private git"
+export GOPRIVATE="github.com/razorpay"
+if [ ! -f ~/.netrc ]; then
+  # Set the SSH URL instead of the HTTPS URL
+  git config --global url."https://x-access-token:${TOKEN_GIT}@github.com".insteadOf "https://github.com"
+fi
+
 cd /action
 
 mkdir -p proto
