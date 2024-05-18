@@ -1,4 +1,4 @@
-FROM c.rzp.io/razorpay/bufbuild:1.6.0_darwin_arm64
+FROM alokrzp/bufbuild:1.6.0_darwin_arm64
 
 # install pre-requisite
 RUN apt update && \
