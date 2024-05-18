@@ -11,7 +11,8 @@ bash sparse-checkout.sh
 cd proto
 echo "generating swagger docs"
 mkdir -p docs
-make proto-generate
+buf mod update
+buf generate proto
 cd ..
 
 echo "combining swagger docs into 1 file"
