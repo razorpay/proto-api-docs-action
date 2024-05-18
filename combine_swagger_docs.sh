@@ -1,6 +1,8 @@
 #!/bin/bash
 set -euo pipefail
 
+cd proto
+
 # find all swagger jsons
 files=$(find "$1" -type f -iname "*swagger.json")
 
@@ -20,3 +22,5 @@ echo '{ "swagger": "2.0", "info": { "title": "", "version": "v1" }, "tags": [ { 
 
 j=$(jq -s '.[0] * .[1]' combined.json last.json)
 echo "$j" > combined.json
+
+cd ..
