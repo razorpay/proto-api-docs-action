@@ -24,3 +24,6 @@ mkdir -p /_docs/${GITHUB_REPOSITORY#*/} && \
 
 echo "upload to s3"
 bash upload_to_s3.sh
+
+echo "upload completed to s3"
+echo "docs available at: https://idocs.razorpay.com/openapi/upi-switch/${BRANCH}"
