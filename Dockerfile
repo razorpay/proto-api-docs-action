@@ -5,7 +5,7 @@ RUN apt update && \
     apt install -y curl && \
     apt install -y git && \
     apt install -y wget && \
-	apt instal -y jq
+	apt install -y jq
 
 COPY . /action
 
