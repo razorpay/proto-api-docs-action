@@ -26,4 +26,5 @@ echo "upload to s3"
 bash upload_to_s3.sh
 
 echo "upload completed to s3"
+BRANCH_NAME=$(echo ${INPUT_PROTO_BRANCH#refs/heads/})
 echo "docs available at: https://idocs.razorpay.com/openapi/upi-switch/${BRANCH}"
