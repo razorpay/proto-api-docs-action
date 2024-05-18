@@ -2,7 +2,7 @@ FROM golang:1.21.0
 
 # Install pre-requisites
 RUN apt update && \
-    apt install -y curl git wget jq
+    apt install -y curl git wget jq awscli
 
 # Install the latest version of protobuf-compiler
 RUN apt install -y protobuf-compiler
