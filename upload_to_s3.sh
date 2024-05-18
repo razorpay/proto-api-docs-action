@@ -58,9 +58,6 @@ EOF
 SOURCE_DIR=/_docs
 echo "SOURCE_DIR is set to '$SOURCE_DIR'."
 
-ls ../_docs/upi-switch/apidocs-2.json
-cat ../_docs/upi-switch/apidocs-2.json
-
 echo "Starting AWS S3 sync..."
 # Sync using our dedicated profile and suppress verbose messages.
 sh -c "aws s3 sync ${SOURCE_DIR} s3://${INPUT_AWS_S3_BUCKET}/${INPUT_DEST_DIR} \
