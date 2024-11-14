@@ -1,46 +1,48 @@
 name: 'proto api docs'
-description: 'Generate swagger api docs from protobuf & push them to a s3 bucket'
+description: 'Generate swagger api docs from protobuf & push them to an S3 bucket'
 branding:
   icon: 'edit-3'
   color: 'gray-dark'
 inputs:
   GIT_TOKEN:
-    description: 'git token to use for cloning the repository containing the protobuf files'
+    description: 'Git token to use for cloning the repository containing the protobuf files'
     required: true
   PROTO_REPOSITORY:
-    description: 'protobuf files github repository including the org name'
+    description: 'Protobuf files GitHub repository including the org name'
     required: true
   PROTO_BRANCH:
-    description: 'branch to clone'
+    description: 'Branch to clone'
     required: true
   MODULE_LIST_FILE_PATH:
-    description: 'path to file containing list of subdirectories of protos to clone'
+    description: 'Path to file containing list of subdirectories of protos to clone'
     required: true
   AWS_S3_BUCKET:
-    description: 's3 bucket name'
+    description: 'S3 bucket name'
     required: true
-  AWS_ACCESS_KEY_ID:
-    description: 'aws access key id'
+  AWS_ROLE_ARN:
+    description: 'IAM role ARN to assume for S3 access'
     required: true
-  AWS_SECRET_ACCESS_KEY:
-    description: 'aws access key secret'
-    required: true
+  AWS_ROLE_SESSION_NAME:
+    description: 'Session name for the assumed role'
+    required: false
+    default: 's3-sync-session'
   AWS_REGION:
-    description: 'aws region'
+    description: 'AWS region'
     required: true
   DEST_DIR:
-    description: 'destination s3 directory'
+    description: 'Destination S3 directory'
     required: true
 runs:
   using: "docker"
   image: 'Dockerfile'
   args:
       - ${{ inputs.GIT_TOKEN }}
-        ${{ inputs.PROTO_REPOSITORY }}
-        ${{ inputs.PROTO_BRANCH }}
-        ${{ inputs.MODULE_LIST_FILE_PATH }}
-        ${{ inputs.AWS_S3_BUCKET}}
-        ${{ inputs.AWS_ACCESS_KEY_ID}}
-        ${{ inputs.AWS_SECRET_ACCESS_KEY}}
-        ${{ inputs.AWS_REGION}}
-        ${{ inputs.DEST_DIR}}
+      - ${{ inputs.PROTO_REPOSITORY }}
+      - ${{ inputs.PROTO_BRANCH }}
+      - ${{ inputs.MODULE_LIST_FILE_PATH }}
+      - ${{ inputs.AWS_S3_BUCKET }}
+      - ${{ inputs.AWS_ROLE_ARN }}
+      - ${{ inputs.AWS_ROLE_SESSION_NAME }}
+      - ${{ inputs.AWS_REGION }}
+      - ${{ inputs.DEST_DIR }}
+
