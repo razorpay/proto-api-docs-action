@@ -1,4 +1,4 @@
-# proto api docs action
+# Proto api docs action
 
 This action clones protobuf files from a (public/private) GitHub repository, generates Swagger v2.0 API docs using buf & grpc-gateway's [protoc-gen-openapiv2](https://github.com/grpc-ecosystem/grpc-gateway/tree/master/protoc-gen-openapiv2) plugin, and finally uploads the generated documentation to AWS S3.
 
