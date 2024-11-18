@@ -1,51 +1,72 @@
-# proto api docs action
+# Proto API Docs Action
 
-This action clones protobuf files from a (public/private) github repository, generate swagger v2.0 api docs using buf & grpc-gateway's [protoc-gen-openapiv2](https://github.com/grpc-ecosystem/grpc-gateway/tree/master/protoc-gen-openapiv2) plugin, and finally upload the generated documentation to aws S3.
+This action clones protobuf files from a (public/private) GitHub repository, generates Swagger v2.0 API docs using `buf` and `grpc-gateway`'s [protoc-gen-openapiv2](https://github.com/grpc-ecosystem/grpc-gateway/tree/master/protoc-gen-openapiv2) plugin, and finally uploads the generated documentation to AWS S3.
 
 ## Inputs
 
 ### GIT_TOKEN:
 
-**Required** git token to use for cloning the repository containing the protobuf files
+**Required**  
+Git token to use for cloning the repository containing the protobuf files.
 
 ### PROTO_REPOSITORY:
 
-**Required** protobuf files github repository including the org name
+**Required**  
+Protobuf files GitHub repository, including the organization name.
 
 ### PROTO_BRANCH:
 
-**Required** branch to clone
+**Required**  
+Branch to clone.
 
 ### MODULE_LIST_FILE_PATH:
 
-**Required** path to file containing list of subdirectories of protos to clone
+**Required**  
+Path to the file containing the list of subdirectories of protos to clone.
 
 ### AWS_S3_BUCKET:
 
-**Required** s3 bucket name
-
-### AWS_ACCESS_KEY_ID:
-
-**Required** aws access key id
-
-### AWS_SECRET_ACCESS_KEY:
-
-**Required** aws access key secret
+**Required**  
+S3 bucket name.
 
 ### AWS_REGION:
 
-**Required** aws region
+**Required**  
+AWS region.
 
 ### DEST_DIR:
 
-**Required** destination s3 directory
+**Required**  
+Destination S3 directory.  
 
-another directory will be created in the destination directory with the name of the repository running this action. The generated documentation will be uploaded to this directory with branch name as the name of the file.
+Another directory will be created inside the destination directory with the name of the repository running this action. The generated documentation will be uploaded to this directory with the branch name as the file name.
+
+### AWS_ACCESS_KEY_ID:
+
+**Optional**  
+AWS access key ID (required if using IAM user credentials).  
+
+### AWS_SECRET_ACCESS_KEY:
+
+**Optional**  
+AWS secret access key (required if using IAM user credentials).  
+
+### AWS_ROLE_ARN:
+
+**Optional**  
+AWS role ARN (required if using IAM role credentials).  
+
+### AWS_WEB_IDENTITY_TOKEN_FILE:
+
+**Optional**  
+AWS web identity token file path (required if using IAM role credentials).  
 
 ## Outputs
-NA
 
-## Example usage
+N/A
+
+## Example Usage
+
 ```yaml
 - uses: actions/checkout@v2
 - uses: razorpay/proto-api-docs-action@v0.2.2
@@ -55,11 +76,13 @@ NA
     PROTO_BRANCH: ${{ github.ref }}
     MODULE_LIST_FILE_PATH: scripts/proto_modules
     AWS_S3_BUCKET: apidocs
-    AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-    AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     AWS_REGION: ap-south-1
     DEST_DIR: _docs
-```
+    AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }} # Optional if using IAM roles
+    AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }} # Optional if using IAM roles
+    AWS_ROLE_ARN: ${{ secrets.AWS_ROLE_ARN }} # Optional if using IAM user credentials
+    AWS_WEB_IDENTITY_TOKEN_FILE: ${{ secrets.AWS_WEB_IDENTITY_TOKEN_FILE }} # Optional if using IAM user credentials
+
 
 ## FAQs
 

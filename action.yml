@@ -1,46 +1,54 @@
 name: 'proto api docs'
-description: 'Generate swagger api docs from protobuf & push them to a s3 bucket'
+description: 'Generate Swagger API docs from protobuf files and push them to an S3 bucket'
 branding:
   icon: 'edit-3'
   color: 'gray-dark'
 inputs:
   GIT_TOKEN:
-    description: 'git token to use for cloning the repository containing the protobuf files'
+    description: 'Git token to use for cloning the repository containing the protobuf files'
     required: true
   PROTO_REPOSITORY:
-    description: 'protobuf files github repository including the org name'
+    description: 'Protobuf files GitHub repository including the org name'
     required: true
   PROTO_BRANCH:
-    description: 'branch to clone'
+    description: 'Branch to clone'
     required: true
   MODULE_LIST_FILE_PATH:
-    description: 'path to file containing list of subdirectories of protos to clone'
+    description: 'Path to file containing list of subdirectories of protos to clone'
     required: true
   AWS_S3_BUCKET:
-    description: 's3 bucket name'
-    required: true
-  AWS_ACCESS_KEY_ID:
-    description: 'aws access key id'
-    required: true
-  AWS_SECRET_ACCESS_KEY:
-    description: 'aws access key secret'
+    description: 'S3 bucket name'
     required: true
   AWS_REGION:
-    description: 'aws region'
+    description: 'AWS region'
     required: true
   DEST_DIR:
-    description: 'destination s3 directory'
+    description: 'Destination S3 directory'
     required: true
+  AWS_ACCESS_KEY_ID:
+    description: 'AWS access key ID (required if using IAM user credentials)'
+    required: false
+  AWS_SECRET_ACCESS_KEY:
+    description: 'AWS secret access key (required if using IAM user credentials)'
+    required: false
+  AWS_ROLE_ARN:
+    description: 'AWS role ARN (required if using IAM role credentials)'
+    required: false
+  AWS_WEB_IDENTITY_TOKEN_FILE:
+    description: 'AWS web identity token file path (required if using IAM role credentials)'
+    required: false
 runs:
   using: "docker"
   image: 'Dockerfile'
   args:
-      - ${{ inputs.GIT_TOKEN }}
-        ${{ inputs.PROTO_REPOSITORY }}
-        ${{ inputs.PROTO_BRANCH }}
-        ${{ inputs.MODULE_LIST_FILE_PATH }}
-        ${{ inputs.AWS_S3_BUCKET}}
-        ${{ inputs.AWS_ACCESS_KEY_ID}}
-        ${{ inputs.AWS_SECRET_ACCESS_KEY}}
-        ${{ inputs.AWS_REGION}}
-        ${{ inputs.DEST_DIR}}
+    - ${{ inputs.GIT_TOKEN }}
+    - ${{ inputs.PROTO_REPOSITORY }}
+    - ${{ inputs.PROTO_BRANCH }}
+    - ${{ inputs.MODULE_LIST_FILE_PATH }}
+    - ${{ inputs.AWS_S3_BUCKET }}
+    - ${{ inputs.AWS_REGION }}
+    - ${{ inputs.DEST_DIR }}
+    - ${{ inputs.AWS_ACCESS_KEY_ID }}
+    - ${{ inputs.AWS_SECRET_ACCESS_KEY }}
+    - ${{ inputs.AWS_ROLE_ARN }}
+    - ${{ inputs.AWS_WEB_IDENTITY_TOKEN_FILE }}
