@@ -1,4 +1,4 @@
-FROM golang:1.23-alpine3.20
+FROM golang:1.21.1-alpine3.18
 
 RUN apk update; apk add make git curl bash jq aws-cli
 
