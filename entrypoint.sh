@@ -7,7 +7,7 @@ echo "cloning protobuf files"
 bash sparse-checkout.sh
 
 echo "generating swagger docs"
-buf mod update && buf generate
+buf mod update && buf generate buf.build/googleapis/googleapis && buf generate
 
 echo "combining swagger docs into 1 file"
 bash combine_swagger_docs.sh docs

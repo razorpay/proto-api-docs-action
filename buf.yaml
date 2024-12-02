@@ -4,6 +4,7 @@ deps:
 #  - buf.build/beta/googleapis
   - buf.build/grpc-ecosystem/grpc-gateway
   - buf.build/razorpay/googleapis-pubsub
+  - buf.build/googleapis/googleapis
 build:
   roots:
     - proto
