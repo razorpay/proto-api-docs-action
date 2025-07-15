@@ -41,7 +41,6 @@ inputs:
     description: 'AWS web identity token file path (required if using IAM role credentials)'
     required: false
 runs:
-  using: "composite"
   steps:
     - uses: razorpay/create-github-app-token@latest
       name: Generate Github Token
