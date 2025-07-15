@@ -4,9 +4,6 @@ branding:
   icon: 'edit-3'
   color: 'gray-dark'
 inputs:
-  GIT_TOKEN:
-    description: 'Git token to use for cloning the repository containing the protobuf files'
-    required: true
   PROTO_REPOSITORY:
     description: 'Protobuf files GitHub repository including the org name'
     required: true
@@ -38,17 +35,26 @@ inputs:
     description: 'AWS web identity token file path (required if using IAM role credentials)'
     required: false
 runs:
-  using: "docker"
-  image: 'Dockerfile'
-  args:
-    - ${{ inputs.GIT_TOKEN }}
-    - ${{ inputs.PROTO_REPOSITORY }}
-    - ${{ inputs.PROTO_BRANCH }}
-    - ${{ inputs.MODULE_LIST_FILE_PATH }}
-    - ${{ inputs.AWS_S3_BUCKET }}
-    - ${{ inputs.AWS_REGION }}
-    - ${{ inputs.DEST_DIR }}
-    - ${{ inputs.AWS_ACCESS_KEY_ID }}
-    - ${{ inputs.AWS_SECRET_ACCESS_KEY }}
-    - ${{ inputs.AWS_ROLE_ARN }}
-    - ${{ inputs.AWS_WEB_IDENTITY_TOKEN_FILE }}
+  using: "composite"
+  steps:
+    - uses: razorpay/create-github-app-token@latest
+      name: Generate Github Token
+      id: app-token
+      with:
+        app-id: ${{ secrets.WORKFLOWGATEKEEPER_APP_ID }}
+        private-key: ${{ secrets.WORKFLOWGATEKEEPER_PRIVATEKEY }}
+        repositories: "proto"
+    - name: Run proto api docs generation
+      uses: docker://./
+      env:
+        GIT_TOKEN: ${{ steps.app-token.outputs.token }}
+        PROTO_REPOSITORY: ${{ inputs.PROTO_REPOSITORY }}
+        PROTO_BRANCH: ${{ inputs.PROTO_BRANCH }}
+        MODULE_LIST_FILE_PATH: ${{ inputs.MODULE_LIST_FILE_PATH }}
+        AWS_S3_BUCKET: ${{ inputs.AWS_S3_BUCKET }}
+        AWS_REGION: ${{ inputs.AWS_REGION }}
+        DEST_DIR: ${{ inputs.DEST_DIR }}
+        AWS_ACCESS_KEY_ID: ${{ inputs.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ inputs.AWS_SECRET_ACCESS_KEY }}
+        AWS_ROLE_ARN: ${{ inputs.AWS_ROLE_ARN }}
+        AWS_WEB_IDENTITY_TOKEN_FILE: ${{ inputs.AWS_WEB_IDENTITY_TOKEN_FILE }}
