@@ -4,6 +4,12 @@ branding:
   icon: 'edit-3'
   color: 'gray-dark'
 inputs:
+  WORKFLOWGATEKEEPER_APP_ID:
+    description: 'GitHub App ID for token generation'
+    required: true
+  WORKFLOWGATEKEEPER_PRIVATEKEY:
+    description: 'GitHub App private key for token generation'
+    required: true
   PROTO_REPOSITORY:
     description: 'Protobuf files GitHub repository including the org name'
     required: true
@@ -41,9 +47,10 @@ runs:
       name: Generate Github Token
       id: app-token
       with:
-        app-id: ${{ secrets.WORKFLOWGATEKEEPER_APP_ID }}
-        private-key: ${{ secrets.WORKFLOWGATEKEEPER_PRIVATEKEY }}
+        app-id: ${{ inputs.WORKFLOWGATEKEEPER_APP_ID }}
+        private-key: ${{ inputs.WORKFLOWGATEKEEPER_PRIVATEKEY }}
         repositories: "proto"
+    
     - name: Run proto api docs generation
       uses: docker://./
       env:
